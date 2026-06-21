@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import ProductCard from "@/components/store/ProductCard";
+import ProductMarquee from "@/components/store/ProductMarquee";
 import { Product, Category } from "@/lib/types";
 
 export const revalidate = 60;
@@ -13,7 +14,7 @@ const YOUTUBE_URL = "https://www.youtube.com/@silvercreekboutique";
 export default async function HomePage() {
   const supabase = await createClient();
 
-  const [{ data: featured }, { data: categories }] = await Promise.all([
+  const [{ data: featured }, { data: categories }, { data: recent }] = await Promise.all([
     supabase
       .from("products")
       .select("*, size_inventory:product_size_inventory(quantity)")
@@ -22,6 +23,12 @@ export default async function HomePage() {
       .order("created_at", { ascending: false })
       .limit(4),
     supabase.from("categories").select("*").order("sort_order").limit(8),
+    supabase
+      .from("products")
+      .select("*, size_inventory:product_size_inventory(quantity)")
+      .eq("is_active", true)
+      .order("created_at", { ascending: false })
+      .limit(12),
   ]);
 
   return (
@@ -72,6 +79,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Animated scrolling products */}
+      <ProductMarquee products={(recent ?? []) as Product[]} />
 
       {/* Category pills */}
       {categories && categories.length > 0 && (
