@@ -28,7 +28,7 @@ export default async function HomePage() {
       .select("*, size_inventory:product_size_inventory(quantity)")
       .eq("is_active", true)
       .order("created_at", { ascending: false })
-      .limit(12),
+      .limit(20),
   ]);
 
   return (
@@ -80,8 +80,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Animated scrolling products */}
-      <ProductMarquee products={(recent ?? []) as Product[]} />
+
+      <ProductMarquee products={(recent as Product[]) ?? []} />
 
       {/* Category pills */}
       {categories && categories.length > 0 && (

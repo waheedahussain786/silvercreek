@@ -45,10 +45,10 @@ function MarqueeCard({ product }: { product: Product }) {
 }
 
 export default function ProductMarquee({ products }: Props) {
-  if (!products.length) return null;
+  if (products.length < 4) return null;
 
-  // Two copies is the minimum for a seamless CSS loop — each product appears once per pass
-  const filled = [...products, ...products];
+  const scrolling = products.length >= 10;
+  const filled = scrolling ? [...products, ...products] : products;
 
   return (
     <section className="bg-[#3D4A1E] py-14 overflow-hidden">
@@ -67,20 +67,29 @@ export default function ProductMarquee({ products }: Props) {
         </Link>
       </div>
 
-      {/* Marquee track */}
-      <div className="marquee-track relative">
-        {/* Fade edges */}
-        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10"
-          style={{ background: "linear-gradient(to right, #3D4A1E, transparent)" }} />
-        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10"
-          style={{ background: "linear-gradient(to left, #3D4A1E, transparent)" }} />
-
-        <div className="flex animate-marquee w-max">
-          {filled.map((product, i) => (
-            <MarqueeCard key={`${product.id}-${i}`} product={product} />
-          ))}
+      {scrolling ? (
+        /* Animated marquee — 10+ products */
+        <div className="marquee-track relative">
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10"
+            style={{ background: "linear-gradient(to right, #3D4A1E, transparent)" }} />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10"
+            style={{ background: "linear-gradient(to left, #3D4A1E, transparent)" }} />
+          <div className="flex animate-marquee w-max">
+            {filled.map((product, i) => (
+              <MarqueeCard key={`${product.id}-${i}`} product={product} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Static row — 4–9 products, no scroll */
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
+            {products.map((product) => (
+              <MarqueeCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-8 sm:hidden">
         <Link href="/shop" className="text-sm font-semibold text-white/60 hover:text-white transition-colors">
