@@ -6,6 +6,9 @@ import { Product, Category } from "@/lib/types";
 export const revalidate = 60;
 
 const ETSY_URL = "https://www.etsy.com/shop/silvercreskboutique/";
+const INSTAGRAM_URL = "https://www.instagram.com/silvercreekboutique";
+const TIKTOK_URL = "https://www.tiktok.com/@humanitysaveslives7";
+const YOUTUBE_URL = "https://www.youtube.com/@silvercreekboutique";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -136,23 +139,34 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Also find us on Etsy */}
+      {/* Find us online */}
       <section className="bg-[#FAF8F5] border-t border-[#E2DDD7]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-[#7B3C8E] font-semibold mb-2">Also find us on</p>
-            <h2 className="font-serif text-3xl text-[#3D4A1E]">Our Etsy Shop</h2>
-            <p className="text-sm text-[#6B6B6B] mt-2">Browse our full catalogue of handmade goods on Etsy.</p>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#7B3C8E] font-semibold mb-2">Follow along</p>
+              <h2 className="font-serif text-3xl text-[#3D4A1E] mb-1">Find us online</h2>
+              <p className="text-sm text-[#6B6B6B]">Shop, watch, and connect with us across platforms.</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <a href={ETSY_URL} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-[#F1641E] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d95a1a] transition-colors">
+                <EtsyIcon /> Etsy
+              </a>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-[#E1306C] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#c42d61] transition-colors">
+                <InstagramIcon /> Instagram
+              </a>
+              <a href={TIKTOK_URL} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-[#010101] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#2c2c2c] transition-colors">
+                <TikTokIcon /> TikTok
+              </a>
+              <a href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-[#FF0000] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#cc0000] transition-colors">
+                <YouTubeIcon /> YouTube
+              </a>
+            </div>
           </div>
-          <a
-            href={ETSY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 flex items-center gap-3 bg-[#F1641E] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#d95a1a] transition-colors"
-          >
-            <EtsyIcon />
-            silvercreskboutique on Etsy
-          </a>
         </div>
       </section>
 
@@ -182,8 +196,34 @@ export default async function HomePage() {
 
 function EtsyIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
       <path d="M10.225 0C4.608 0 0 4.608 0 10.225c0 5.616 4.608 10.224 10.225 10.224 5.617 0 10.225-4.608 10.225-10.224C20.45 4.608 15.842 0 10.225 0zm-.01 3.388c.505 0 .91.406.91.91v.682h1.365c.504 0 .91.405.91.909s-.406.91-.91.91H11.12v3.41h1.593c.504 0 .91.406.91.91s-.406.91-.91.91H11.12v3.638h1.593c.504 0 .91.406.91.91s-.406.91-.91.91H9.76a.91.91 0 01-.91-.91V4.298c0-.504.406-.91.91-.91h.455z"/>
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </svg>
+  );
+}
+
+function TikTokIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+    </svg>
+  );
+}
+
+function YouTubeIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58a2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
     </svg>
   );
 }
