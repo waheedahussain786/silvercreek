@@ -9,8 +9,8 @@ import { useCart } from "@/lib/cart-context";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { label: "Shop", href: "/shop" },
   { label: "About", href: "/about" },
+  { label: "Shop", href: "/shop" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -25,16 +25,16 @@ export default function Header({ onCartOpen }: Props) {
 
   return (
     <header className="bg-white border-b border-[#E2DDD7] sticky top-0 z-40">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
 
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png"
             alt="Silver Creek Boutique"
-            width={160}
-            height={52}
-            className="h-10 w-auto object-contain"
+            width={200}
+            height={66}
+            className="h-14 w-auto object-contain"
             priority
           />
         </Link>

@@ -10,7 +10,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#3D4A1E] text-white">
+    <footer className="bg-white border-t border-[#E2DDD7]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-14 pb-10">
         <div className="grid sm:grid-cols-3 gap-10 mb-12">
           {/* Brand */}
@@ -18,30 +18,30 @@ export default function Footer() {
             <Image
               src="/logo.png"
               alt="Silver Creek Boutique"
-              width={140}
-              height={46}
-              className="h-9 w-auto object-contain brightness-0 invert mb-5"
+              width={260}
+              height={86}
+              className="h-20 w-auto object-contain mb-5"
             />
-            <p className="text-sm text-white/55 leading-relaxed max-w-xs mb-6">
+            <p className="text-sm text-[#6B6B6B] leading-relaxed max-w-xs mb-6">
               Custom work, printing, engraving, original art, and accessories.
             </p>
 
             {/* Social links */}
             <div className="flex items-center gap-2.5">
               <a href={ETSY_URL} target="_blank" rel="noopener noreferrer" aria-label="Etsy"
-                className="w-9 h-9 rounded-xl bg-white/10 hover:bg-[#F1641E] flex items-center justify-center transition-colors">
+                className="w-9 h-9 rounded-xl bg-[#E2DDD7] hover:bg-[#F1641E] hover:text-white text-[#2C2C2C] flex items-center justify-center transition-colors">
                 <EtsyIcon />
               </a>
               <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-                className="w-9 h-9 rounded-xl bg-white/10 hover:bg-[#E1306C] flex items-center justify-center transition-colors">
+                className="w-9 h-9 rounded-xl bg-[#E2DDD7] hover:bg-[#E1306C] hover:text-white text-[#2C2C2C] flex items-center justify-center transition-colors">
                 <InstagramIcon />
               </a>
               <a href={TIKTOK_URL} target="_blank" rel="noopener noreferrer" aria-label="TikTok"
-                className="w-9 h-9 rounded-xl bg-white/10 hover:bg-[#010101] flex items-center justify-center transition-colors">
+                className="w-9 h-9 rounded-xl bg-[#E2DDD7] hover:bg-[#010101] hover:text-white text-[#2C2C2C] flex items-center justify-center transition-colors">
                 <TikTokIcon />
               </a>
               <a href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer" aria-label="YouTube"
-                className="w-9 h-9 rounded-xl bg-white/10 hover:bg-[#FF0000] flex items-center justify-center transition-colors">
+                className="w-9 h-9 rounded-xl bg-[#E2DDD7] hover:bg-[#FF0000] hover:text-white text-[#2C2C2C] flex items-center justify-center transition-colors">
                 <YouTubeIcon />
               </a>
             </div>
@@ -49,16 +49,16 @@ export default function Footer() {
 
           {/* Links */}
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/35 mb-5">Explore</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6B6B6B] mb-5">Explore</p>
             <ul className="space-y-3">
               {[["Shop All", "/shop"], ["About Us", "/about"], ["Contact", "/contact"]].map(([label, href]) => (
                 <li key={href}>
-                  <Link href={href} className="text-sm text-white/65 hover:text-white transition-colors">{label}</Link>
+                  <Link href={href} className="text-sm text-[#6B6B6B] hover:text-[#2C2C2C] transition-colors">{label}</Link>
                 </li>
               ))}
               <li>
                 <a href={ETSY_URL} target="_blank" rel="noopener noreferrer"
-                  className="text-sm text-white/65 hover:text-white transition-colors">
+                  className="text-sm text-[#6B6B6B] hover:text-[#2C2C2C] transition-colors">
                   Etsy Shop ↗
                 </a>
               </li>
@@ -67,7 +67,7 @@ export default function Footer() {
 
           {/* Info */}
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/35 mb-5">Good to know</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6B6B6B] mb-5">Good to know</p>
             <ul className="space-y-3">
               {[
                 "Handmade & custom orders",
@@ -75,8 +75,8 @@ export default function Footer() {
                 "Secure checkout via Stripe",
                 "Ships in 2–5 business days",
               ].map((line) => (
-                <li key={line} className="flex items-start gap-2.5 text-sm text-white/65">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#8BC34A] mt-1.5 shrink-0" />
+                <li key={line} className="flex items-start gap-2.5 text-sm text-[#6B6B6B]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#3D4A1E] mt-1.5 shrink-0" />
                   {line}
                 </li>
               ))}
@@ -84,9 +84,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-7 flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p className="text-xs text-white/35">© {year} Silver Creek Boutique. All rights reserved.</p>
-          <p className="text-xs text-white/25">Secure payments by Stripe</p>
+        <div className="border-t border-[#E2DDD7] pt-7 flex flex-col sm:flex-row justify-between items-center gap-2">
+          <p className="text-xs text-[#6B6B6B]">© {year} Silver Creek Boutique. All rights reserved.</p>
+          <p className="text-xs text-[#6B6B6B]">Secure payments by Stripe</p>
         </div>
       </div>
     </footer>

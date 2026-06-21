@@ -49,5 +49,11 @@ export async function POST(request: NextRequest) {
     await supabase.from("product_size_inventory").insert(inventory);
   }
 
+  if (body.tag_ids?.length) {
+    await supabase.from("product_tags").insert(
+      body.tag_ids.map((tag_id: string) => ({ product_id: product.id, tag_id }))
+    );
+  }
+
   return NextResponse.json(product, { status: 201 });
 }

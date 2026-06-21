@@ -17,7 +17,7 @@ export default async function ProductsPage() {
     <div className="max-w-4xl">
       <div className="flex items-center justify-between mb-8">
         <h1 className="font-serif text-3xl text-[#3D4A1E]">Products</h1>
-        <Link href="/admin/products/new" className="flex items-center gap-2 bg-[#3D4A1E] text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors">
+        <Link href="/admin/products/new" className="inline-flex items-center gap-2 bg-[#3D4A1E] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors">
           <Plus size={16} /> New Product
         </Link>
       </div>

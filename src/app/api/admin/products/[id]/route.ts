@@ -9,7 +9,7 @@ export async function GET(_: NextRequest, { params }: { params: Promise<{ id: st
   const supabase = await createServiceClient();
   const { data, error } = await supabase
     .from("products")
-    .select("*, category:categories(id,name,slug), size_inventory:product_size_inventory(*)")
+    .select("*, category:categories(id,name,slug), size_inventory:product_size_inventory(*), product_tags(tags(id,name,slug))")
     .eq("id", id)
     .single();
   if (error) return NextResponse.json({ error: error.message }, { status: 404 });
@@ -54,6 +54,14 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       }));
       await supabase.from("product_size_inventory").insert(inventory);
     }
+  }
+
+  // Always sync tags (replace all)
+  await supabase.from("product_tags").delete().eq("product_id", id);
+  if (body.tag_ids?.length) {
+    await supabase.from("product_tags").insert(
+      body.tag_ids.map((tag_id: string) => ({ product_id: id, tag_id }))
+    );
   }
 
   return NextResponse.json(product);

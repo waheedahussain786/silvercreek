@@ -9,12 +9,22 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
   const { id } = await params;
   const supabase = await createServiceClient();
 
-  const [{ data: product }, { data: categories }] = await Promise.all([
-    supabase.from("products").select("*, size_inventory:product_size_inventory(*)").eq("id", id).single(),
+  const [{ data: product }, { data: categories }, { data: tags }] = await Promise.all([
+    supabase
+      .from("products")
+      .select("*, size_inventory:product_size_inventory(*), product_tags(tags(id, name, slug))")
+      .eq("id", id)
+      .single(),
     supabase.from("categories").select("*").order("sort_order"),
+    supabase.from("tags").select("*").order("name"),
   ]);
 
   if (!product) notFound();
+
+  const productWithTags = {
+    ...product,
+    tags: (product.product_tags ?? []).map((pt: { tags: { id: string; name: string; slug: string } | null }) => pt.tags).filter(Boolean),
+  };
 
   return (
     <div className="max-w-2xl">
@@ -25,7 +35,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
         <DeleteProductButton id={id} name={product.name} />
       </div>
       <h1 className="font-serif text-3xl text-[#3D4A1E] mb-8">Edit Product</h1>
-      <ProductForm categories={categories ?? []} product={product} />
+      <ProductForm categories={categories ?? []} allTags={tags ?? []} product={productWithTags} />
     </div>
   );
 }

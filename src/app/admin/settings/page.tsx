@@ -95,7 +95,7 @@ export default function SettingsPage() {
         <button
           onClick={save}
           disabled={saving}
-          className="flex items-center gap-2 bg-[#3D4A1E] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-2 bg-[#3D4A1E] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors disabled:opacity-50"
         >
           {saved ? <><Check size={15} /> Saved!</> : saving ? "Saving…" : "Save Settings"}
         </button>

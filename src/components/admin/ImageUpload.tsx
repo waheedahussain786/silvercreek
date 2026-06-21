@@ -69,7 +69,7 @@ export default function ImageUpload({ images, onChange }: Props) {
       </div>
 
       {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
-      <p className="text-xs text-[#6B6B6B]">First image is the main photo. Drag to reorder (coming soon).</p>
+      <p className="text-xs text-[#6B6B6B]">First image is the main photo.</p>
 
       <input
         ref={inputRef}

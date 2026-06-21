@@ -20,7 +20,8 @@ export default function CategoriesPage() {
 
   async function load() {
     const res = await fetch("/api/admin/categories");
-    setCategories(await res.json());
+    const data = await res.json();
+    setCategories(Array.isArray(data) ? data : []);
     setLoading(false);
   }
 
@@ -70,7 +71,8 @@ export default function CategoriesPage() {
   }
 
   function requestToggle(cat: CategoryWithCount) {
-    if (cat.is_active && cat.product_count > 0) {
+    const active = cat.is_active !== false;
+    if (active && cat.product_count > 0) {
       setConfirmHide(cat);
     } else {
       doToggle(cat);
@@ -132,7 +134,7 @@ export default function CategoriesPage() {
 
       <div className="flex items-center justify-between mb-8">
         <h1 className="font-serif text-3xl text-[#3D4A1E]">Categories</h1>
-        <button onClick={openNew} className="flex items-center gap-2 bg-[#3D4A1E] text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors">
+        <button onClick={openNew} className="inline-flex items-center gap-2 bg-[#3D4A1E] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors">
           <Plus size={16} /> New Category
         </button>
       </div>
@@ -161,10 +163,10 @@ export default function CategoriesPage() {
               />
             </div>
             <div className="flex gap-3">
-              <button onClick={save} disabled={saving || !name.trim()} className="flex items-center gap-2 bg-[#3D4A1E] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors disabled:opacity-50">
+              <button onClick={save} disabled={saving || !name.trim()} className="inline-flex items-center gap-2 bg-[#3D4A1E] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors disabled:opacity-50">
                 <Check size={15} /> {saving ? "Saving…" : "Save"}
               </button>
-              <button onClick={() => setShowForm(false)} className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium border border-[#E2DDD7] hover:bg-[#FAF8F5] transition-colors">
+              <button onClick={() => setShowForm(false)} className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium border border-[#E2DDD7] hover:bg-[#FAF8F5] transition-colors">
                 <X size={15} /> Cancel
               </button>
             </div>
@@ -182,12 +184,12 @@ export default function CategoriesPage() {
         ) : (
           <ul className="divide-y divide-[#E2DDD7]">
             {categories.map((cat) => (
-              <li key={cat.id} className={`flex items-center gap-4 px-5 py-4 transition-opacity ${!cat.is_active ? "opacity-50" : ""}`}>
+              <li key={cat.id} className={`flex items-center gap-4 px-5 py-4 transition-opacity ${cat.is_active === false ? "opacity-50" : ""}`}>
                 <GripVertical size={16} className="text-[#C5C9A8] shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-medium text-[#2C2C2C] text-sm">{cat.name}</p>
-                    {!cat.is_active && (
+                    {cat.is_active === false && (
                       <span className="text-[10px] font-semibold uppercase tracking-widest text-[#6B6B6B] bg-[#F0EDE8] px-2 py-0.5 rounded-full">
                         Hidden
                       </span>
@@ -206,10 +208,10 @@ export default function CategoriesPage() {
                   <button
                     onClick={() => requestToggle(cat)}
                     disabled={toggling === cat.id}
-                    title={cat.is_active ? "Hide from shop" : "Show in shop"}
+                    title={cat.is_active !== false ? "Hide from shop" : "Show in shop"}
                     className="p-2 rounded-lg hover:bg-[#FAF8F5] text-[#6B6B6B] hover:text-[#3D4A1E] transition-colors disabled:opacity-40"
                   >
-                    {cat.is_active ? <Eye size={15} /> : <EyeOff size={15} />}
+                    {cat.is_active !== false ? <Eye size={15} /> : <EyeOff size={15} />}
                   </button>
                   <button
                     onClick={() => openEdit(cat)}

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, X } from "lucide-react";
 import ImageUpload from "./ImageUpload";
-import { Category, Product } from "@/lib/types";
+import { Category, Product, Tag } from "@/lib/types";
 
 interface SizeRow { size: string; quantity: number; }
 
@@ -12,10 +12,11 @@ const DEFAULT_SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
 
 interface Props {
   categories: Category[];
+  allTags: Tag[];
   product?: Product;
 }
 
-export default function ProductForm({ categories, product }: Props) {
+export default function ProductForm({ categories, allTags, product }: Props) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -35,6 +36,7 @@ export default function ProductForm({ categories, product }: Props) {
     DEFAULT_SIZES.map((s) => ({ size: s, quantity: 0 }))
   );
   const [customSize, setCustomSize] = useState("");
+  const [tagIds, setTagIds] = useState<string[]>(product?.tags?.map((t) => t.id) ?? []);
 
   function addCustomSize() {
     const s = customSize.trim().toUpperCase();
@@ -49,6 +51,10 @@ export default function ProductForm({ categories, product }: Props) {
 
   function removeSize(idx: number) {
     setSizeRows(sizeRows.filter((_, i) => i !== idx));
+  }
+
+  function toggleTag(id: string) {
+    setTagIds((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
   }
 
   async function save() {
@@ -69,6 +75,7 @@ export default function ProductForm({ categories, product }: Props) {
       sizes: hasSizes ? sizeRows.map((r) => r.size) : [],
       quantity: hasSizes ? 0 : parseInt(quantity),
       size_inventory: hasSizes ? sizeRows : [],
+      tag_ids: tagIds,
     };
 
     const url = product ? `/api/admin/products/${product.id}` : "/api/admin/products";
@@ -118,19 +125,22 @@ export default function ProductForm({ categories, product }: Props) {
       {/* Pricing */}
       <div className="bg-white rounded-2xl border border-[#E2DDD7] p-6 space-y-5">
         <h2 className="font-semibold text-[#2C2C2C]">Pricing</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-4">
           <div>
             <label className="field-label">Price *</label>
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B6B] text-sm">$</span>
-              <input type="number" min="0" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} className="field-input pl-7" placeholder="0.00" />
+            <div className="price-input">
+              <span className="price-prefix">$</span>
+              <input type="number" min="0" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} className="price-field" placeholder="0.00" />
             </div>
           </div>
           <div>
-            <label className="field-label">Compare-at Price <span className="normal-case font-normal">(optional, shows crossed out)</span></label>
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B6B] text-sm">$</span>
-              <input type="number" min="0" step="0.01" value={compareAt} onChange={(e) => setCompareAt(e.target.value)} className="field-input pl-7" placeholder="0.00" />
+            <label className="field-label">
+              Compare-at Price{" "}
+              <span className="normal-case font-normal text-[#6B6B6B]">— shows crossed out</span>
+            </label>
+            <div className="price-input">
+              <span className="price-prefix">$</span>
+              <input type="number" min="0" step="0.01" value={compareAt} onChange={(e) => setCompareAt(e.target.value)} className="price-field" placeholder="0.00" />
             </div>
           </div>
         </div>
@@ -190,6 +200,38 @@ export default function ProductForm({ categories, product }: Props) {
         )}
       </div>
 
+      {/* Tags */}
+      <div className="bg-white rounded-2xl border border-[#E2DDD7] p-6 space-y-4">
+        <h2 className="font-semibold text-[#2C2C2C]">Tags</h2>
+        {allTags.length === 0 ? (
+          <p className="text-sm text-[#6B6B6B]">
+            No tags yet.{" "}
+            <a href="/admin/tags" className="text-[#7B3C8E] hover:underline font-medium">Create tags</a>
+            {" "}to organize products.
+          </p>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {allTags.map((tag) => {
+              const selected = tagIds.includes(tag.id);
+              return (
+                <button
+                  key={tag.id}
+                  type="button"
+                  onClick={() => toggleTag(tag.id)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors border ${
+                    selected
+                      ? "bg-[#3D4A1E] text-white border-[#3D4A1E]"
+                      : "bg-white text-[#6B6B6B] border-[#E2DDD7] hover:border-[#3D4A1E] hover:text-[#3D4A1E]"
+                  }`}
+                >
+                  {tag.name}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
       {/* Visibility */}
       <div className="bg-white rounded-2xl border border-[#E2DDD7] p-6 space-y-4">
         <h2 className="font-semibold text-[#2C2C2C]">Visibility</h2>
@@ -204,10 +246,10 @@ export default function ProductForm({ categories, product }: Props) {
       </div>
 
       <div className="flex gap-3">
-        <button type="button" onClick={save} disabled={saving} className="bg-[#3D4A1E] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors disabled:opacity-50">
+        <button type="button" onClick={save} disabled={saving} className="inline-flex items-center gap-2 bg-[#3D4A1E] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#4f6027] transition-colors disabled:opacity-50">
           {saving ? "Saving…" : product ? "Save Changes" : "Create Product"}
         </button>
-        <button type="button" onClick={() => router.push("/admin/products")} className="px-6 py-3 rounded-xl text-sm font-medium border border-[#E2DDD7] hover:bg-[#FAF8F5] transition-colors">
+        <button type="button" onClick={() => router.push("/admin/products")} className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium border border-[#E2DDD7] hover:bg-[#FAF8F5] transition-colors">
           Cancel
         </button>
       </div>
@@ -216,6 +258,10 @@ export default function ProductForm({ categories, product }: Props) {
         .field-label { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #6B6B6B; margin-bottom: 0.375rem; }
         .field-input { width: 100%; padding: 0.625rem 1rem; border: 1px solid #E2DDD7; border-radius: 0.75rem; font-size: 0.875rem; outline: none; background: #FAF8F5; }
         .field-input:focus { box-shadow: 0 0 0 2px #3D4A1E; border-color: transparent; }
+        .price-input { display: flex; align-items: center; border: 1px solid #E2DDD7; border-radius: 0.75rem; background: #FAF8F5; overflow: hidden; }
+        .price-input:focus-within { box-shadow: 0 0 0 2px #3D4A1E; }
+        .price-prefix { padding: 0.625rem 0 0.625rem 0.875rem; font-size: 0.875rem; color: #6B6B6B; user-select: none; }
+        .price-field { flex: 1; padding: 0.625rem 0.875rem; font-size: 0.875rem; outline: none; background: transparent; min-width: 0; }
       `}</style>
     </div>
   );
