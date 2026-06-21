@@ -86,9 +86,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
           <div className="mt-8 pt-8 border-t border-[#E2DDD7] space-y-3">
             {[
-              "Free returns within 14 days",
+              "Handmade — each piece is one of a kind",
               "Secure checkout via Stripe",
-              "Ships within 2–4 business days",
+              "Ships within 2–5 business days",
             ].map((line) => (
               <p key={line} className="text-xs text-[#6B6B6B] flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#8BC34A] shrink-0" />
