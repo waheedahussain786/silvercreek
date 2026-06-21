@@ -23,7 +23,7 @@ export default function Footer() {
               className="h-9 w-auto object-contain brightness-0 invert mb-5"
             />
             <p className="text-sm text-white/55 leading-relaxed max-w-xs mb-6">
-              Handmade art and goods, crafted with care and shipped with love.
+              Custom work, printing, engraving, original art, and accessories.
             </p>
 
             {/* Social links */}
@@ -70,8 +70,8 @@ export default function Footer() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/35 mb-5">Good to know</p>
             <ul className="space-y-3">
               {[
-                "All items are handmade",
-                "Each piece is one of a kind",
+                "Handmade & custom orders",
+                "One-of-a-kind — no restocks",
                 "Secure checkout via Stripe",
                 "Ships in 2–5 business days",
               ].map((line) => (

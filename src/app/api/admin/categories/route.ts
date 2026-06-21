@@ -6,12 +6,22 @@ import { slugify } from "@/lib/utils";
 export async function GET() {
   await requireAuth();
   const supabase = await createServiceClient();
-  const { data, error } = await supabase
-    .from("categories")
-    .select("*")
-    .order("sort_order");
+
+  const [{ data: cats, error }, { data: products }] = await Promise.all([
+    supabase.from("categories").select("*").order("sort_order"),
+    supabase.from("products").select("category_id").eq("is_active", true),
+  ]);
+
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data);
+
+  const countMap: Record<string, number> = {};
+  products?.forEach((p) => {
+    if (p.category_id) countMap[p.category_id] = (countMap[p.category_id] || 0) + 1;
+  });
+
+  return NextResponse.json(
+    (cats ?? []).map((c) => ({ ...c, product_count: countMap[c.id] || 0 }))
+  );
 }
 
 export async function POST(request: NextRequest) {

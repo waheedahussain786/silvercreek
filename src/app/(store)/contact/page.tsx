@@ -23,7 +23,7 @@ export default function ContactPage() {
       <p className="text-xs text-[#7B3C8E] font-semibold uppercase tracking-widest mb-3">Get in Touch</p>
       <h1 className="font-serif text-5xl text-[#3D4A1E] mb-3 leading-tight">Contact Us</h1>
       <p className="text-[#6B6B6B] mb-10 leading-relaxed">
-        Have a question about an order, a product, or just want to say hello? We'd love to hear from you.
+        Questions about an order, a product, or a custom request? Send us a message.
       </p>
 
       {status === "sent" ? (
@@ -67,7 +67,7 @@ export default function ContactPage() {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="w-full px-4 py-2.5 border border-[#E2DDD7] rounded-xl text-sm bg-[#FAF8F5] focus:outline-none focus:ring-2 focus:ring-[#3D4A1E] resize-none"
-              placeholder="What's on your mind?"
+              placeholder="Your question or custom request"
             />
           </div>
 

@@ -14,23 +14,27 @@ export default async function ShopPage({ searchParams }: Props) {
   const supabase = await createClient();
 
   const [{ data: categories }, productsRes] = await Promise.all([
-    supabase.from("categories").select("*").order("sort_order"),
+    supabase.from("categories").select("*").eq("is_active", true).order("sort_order"),
     (async () => {
       let query = supabase
         .from("products")
-        .select("*, category:categories(id,name,slug), size_inventory:product_size_inventory(quantity)")
+        .select("*, category:categories(id,name,slug,is_active), size_inventory:product_size_inventory(quantity)")
         .eq("is_active", true)
         .order("created_at", { ascending: false });
 
       if (category) {
-        const { data: cat } = await supabase.from("categories").select("id").eq("slug", category).single();
+        const { data: cat } = await supabase.from("categories").select("id").eq("slug", category).eq("is_active", true).single();
         if (cat) query = query.eq("category_id", cat.id);
       }
       return query;
     })(),
   ]);
 
-  const products = productsRes.data as Product[];
+  const allProducts = (productsRes.data ?? []) as Product[];
+  // Exclude products from hidden categories (only applies when browsing All)
+  const products = category
+    ? allProducts
+    : allProducts.filter((p) => !p.category || (p.category as unknown as { is_active: boolean }).is_active !== false);
   const activeCategory = (categories as Category[] | null)?.find((c) => c.slug === category);
 
   return (

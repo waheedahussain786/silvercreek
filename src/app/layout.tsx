@@ -18,12 +18,12 @@ export const metadata: Metadata = {
     default: "Silver Creek Boutique",
     template: "%s | Silver Creek Boutique",
   },
-  description: "Handmade art and goods crafted with care. Shop one-of-a-kind pieces at Silver Creek Boutique.",
+  description: "Custom work, printing, engraving, original art, and accessories. One-of-a-kind pieces and made-to-order at Silver Creek Boutique.",
   openGraph: {
     type: "website",
     siteName: "Silver Creek Boutique",
     title: "Silver Creek Boutique",
-    description: "Handmade art and goods, crafted with care.",
+    description: "Custom work, printing, engraving, original art, and accessories.",
   },
 };
 

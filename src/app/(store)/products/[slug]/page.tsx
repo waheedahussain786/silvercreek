@@ -86,7 +86,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
           <div className="mt-8 pt-8 border-t border-[#E2DDD7] space-y-3">
             {[
-              "Handmade — each piece is one of a kind",
+              "Handmade — no duplicates",
               "Secure checkout via Stripe",
               "Ships within 2–5 business days",
             ].map((line) => (

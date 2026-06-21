@@ -40,6 +40,21 @@ create table product_size_inventory (
   unique(product_id, size)
 );
 
+-- Tags
+create table tags (
+  id uuid primary key default uuid_generate_v4(),
+  name text not null,
+  slug text not null unique,
+  created_at timestamptz not null default now()
+);
+
+-- Product-Tag join table
+create table product_tags (
+  product_id uuid not null references products(id) on delete cascade,
+  tag_id uuid not null references tags(id) on delete cascade,
+  primary key (product_id, tag_id)
+);
+
 -- Orders
 create table orders (
   id uuid primary key default uuid_generate_v4(),
@@ -105,6 +120,11 @@ alter table store_settings enable row level security;
 
 create policy "public read categories" on categories for select using (true);
 create policy "public read active products" on products for select using (is_active = true);
+
+alter table tags enable row level security;
+alter table product_tags enable row level security;
+create policy "public read tags" on tags for select using (true);
+create policy "public read product_tags" on product_tags for select using (true);
 create policy "public read size inventory" on product_size_inventory for select using (true);
 create policy "public read settings" on store_settings for select using (true);
 

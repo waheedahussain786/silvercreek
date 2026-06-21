@@ -1,9 +1,17 @@
+export type Tag = {
+  id: string;
+  name: string;
+  slug: string;
+  created_at: string;
+};
+
 export type Category = {
   id: string;
   name: string;
   slug: string;
   description: string | null;
   sort_order: number;
+  is_active: boolean;
   created_at: string;
 };
 
@@ -25,6 +33,7 @@ export type Product = {
   updated_at: string;
   category?: Category;
   size_inventory?: ProductSizeInventory[];
+  tags?: Tag[];
 };
 
 export type ProductSizeInventory = {

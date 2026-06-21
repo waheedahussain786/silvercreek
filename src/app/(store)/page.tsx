@@ -22,7 +22,7 @@ export default async function HomePage() {
       .eq("featured", true)
       .order("created_at", { ascending: false })
       .limit(4),
-    supabase.from("categories").select("*").order("sort_order").limit(8),
+    supabase.from("categories").select("*").eq("is_active", true).order("sort_order").limit(8),
     supabase
       .from("products")
       .select("*, size_inventory:product_size_inventory(quantity)")
@@ -51,13 +51,13 @@ export default async function HomePage() {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-32">
           <div className="max-w-xl">
             <p className="text-[10px] uppercase tracking-[0.35em] text-[#8BC34A] font-semibold mb-5">
-              Handmade with love
+              Printing · Engraving · Art · Accessories
             </p>
             <h1 className="font-serif text-5xl sm:text-[4.5rem] font-light leading-[1.05] mb-6">
-              Art made by hand,<br />given with heart
+              Custom pieces.<br />Original work.
             </h1>
             <p className="text-white/65 text-base sm:text-lg mb-10 leading-relaxed">
-              Every piece is handcrafted and one-of-a-kind. Browse our collection or visit us on Etsy.
+              One-of-a-kind art, custom orders, printing, engraving, business cards, flyers, accessories, and more.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
@@ -114,7 +114,7 @@ export default async function HomePage() {
           <div className="flex items-end justify-between mb-10">
             <div>
               <p className="text-[10px] uppercase tracking-[0.3em] text-[#7B3C8E] font-semibold mb-2">
-                Handcrafted goods
+                What we make
               </p>
               <h2 className="font-serif text-4xl text-[#3D4A1E]">Featured Pieces</h2>
             </div>
@@ -135,10 +135,10 @@ export default async function HomePage() {
         </section>
       ) : (
         <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20 text-center">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-[#7B3C8E] font-semibold mb-3">Handcrafted goods</p>
-          <h2 className="font-serif text-4xl text-[#3D4A1E] mb-4">Browse the Collection</h2>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[#7B3C8E] font-semibold mb-3">What we make</p>
+          <h2 className="font-serif text-4xl text-[#3D4A1E] mb-4">Browse the Shop</h2>
           <p className="text-[#6B6B6B] mb-8 max-w-sm mx-auto">
-            Discover handmade art and goods, each piece uniquely crafted.
+            In-stock pieces and custom orders. Reach out if you don't see what you need.
           </p>
           <Link
             href="/shop"
@@ -154,9 +154,9 @@ export default async function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-[#7B3C8E] font-semibold mb-2">Follow along</p>
-              <h2 className="font-serif text-3xl text-[#3D4A1E] mb-1">Find us online</h2>
-              <p className="text-sm text-[#6B6B6B]">Shop, watch, and connect with us across platforms.</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#7B3C8E] font-semibold mb-2">Find us</p>
+              <h2 className="font-serif text-3xl text-[#3D4A1E] mb-1">We're also on</h2>
+              <p className="text-sm text-[#6B6B6B]">Shop on Etsy or follow us for updates.</p>
             </div>
             <div className="flex flex-wrap gap-3">
               <a href={ETSY_URL} target="_blank" rel="noopener noreferrer"
@@ -185,9 +185,9 @@ export default async function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid sm:grid-cols-3 gap-8 text-center sm:text-left">
             {[
-              { label: "Handmade", body: "Every item is crafted by hand with care and intention." },
-              { label: "One of a kind", body: "Limited pieces — when it's gone, it's gone." },
-              { label: "Secure Checkout", body: "Safe, easy payment powered by Stripe." },
+              { label: "Custom & handmade", body: "Printing, engraving, art, accessories, and more — made to order or one-of-a-kind." },
+              { label: "Limited stock", body: "In-stock pieces don't get restocked. When it's gone, it's gone." },
+              { label: "Secure checkout", body: "Payments processed by Stripe." },
             ].map(({ label, body }) => (
               <div key={label} className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
                 <div className="w-2 h-2 rounded-full bg-[#8BC34A] mt-1.5 shrink-0 hidden sm:block" />

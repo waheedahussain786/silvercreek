@@ -16,6 +16,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       slug: body.slug || slugify(body.name),
       description: body.description || null,
       sort_order: body.sort_order,
+      ...(body.is_active !== undefined && { is_active: body.is_active }),
     })
     .eq("id", id)
     .select()

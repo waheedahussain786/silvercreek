@@ -47,17 +47,15 @@ function MarqueeCard({ product }: { product: Product }) {
 export default function ProductMarquee({ products }: Props) {
   if (!products.length) return null;
 
-  // Need at least enough cards to fill the viewport twice for seamless loop
-  const filled = products.length < 6
-    ? [...products, ...products, ...products, ...products]
-    : [...products, ...products];
+  // Two copies is the minimum for a seamless CSS loop — each product appears once per pass
+  const filled = [...products, ...products];
 
   return (
     <section className="bg-[#3D4A1E] py-14 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-8 flex items-end justify-between">
         <div>
           <p className="text-[10px] uppercase tracking-[0.3em] text-[#8BC34A] font-semibold mb-2">
-            Fresh arrivals
+            Just added
           </p>
           <h2 className="font-serif text-4xl text-white font-light">New in the Shop</h2>
         </div>

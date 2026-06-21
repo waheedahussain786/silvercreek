@@ -12,9 +12,9 @@ export default function OrderConfirmationPage() {
         </div>
 
         <p className="text-[10px] uppercase tracking-[0.3em] text-[#7B3C8E] font-semibold mb-3">Order Confirmed</p>
-        <h1 className="font-serif text-4xl text-[#3D4A1E] mb-4">Thank you!</h1>
+        <h1 className="font-serif text-4xl text-[#3D4A1E] mb-4">Order placed.</h1>
         <p className="text-[#6B6B6B] leading-relaxed mb-2">
-          Your order is placed and we're getting it ready for you.
+          We have your order and will get it ready to ship.
         </p>
         <p className="text-sm text-[#6B6B6B] mb-10">
           Have questions?{" "}
