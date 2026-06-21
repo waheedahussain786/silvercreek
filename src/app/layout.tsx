@@ -14,18 +14,25 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Silver Creek Boutique",
-  description: "Handpicked pieces for the modern woman.",
+  title: {
+    default: "Silver Creek Boutique",
+    template: "%s | Silver Creek Boutique",
+  },
+  description: "Handpicked fashion for the modern woman. Shop curated clothing and accessories at Silver Creek Boutique.",
+  openGraph: {
+    type: "website",
+    siteName: "Silver Creek Boutique",
+    title: "Silver Creek Boutique",
+    description: "Handpicked fashion for the modern woman.",
+  },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable} h-full`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#FAF8F5] text-[#2C2C2C] antialiased">
+        {children}
+      </body>
     </html>
   );
 }
